@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konkan Coast Properties - Find Your Perfect Home</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo" onclick="window.location.href='/'">
+                    <i class="fas fa-home"></i>
+                    Konkan Properties
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/properties">Properties</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="auth-buttons" id="navAuth">
+                    <a href="/login" class="btn btn-outline">Login</a>
+                    <a href="/register" class="btn btn-primary">Register</a>
+                </div>
+                <div class="nav-user" id="navUser" style="display: none;">
+                    <span>Welcome, <strong id="userName"></strong> (<span id="userRole"></span>)</span>
+                    <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+                    <button onclick="logout()" class="btn btn-secondary">Logout</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Your Perfect Home in Konkan</h1>
+            <p>Discover premium properties with coastal views, modern amenities, and incredible investment opportunities in Maharashtra's most beautiful region.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary btn-large" onclick="openModal('propertyModal')">
+                    <i class="fas fa-plus"></i> List Your Property
+                </button>
+                <a href="/properties" class="btn btn-secondary btn-large">
+                    <i class="fas fa-search"></i> Browse Properties
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Section -->
+    <section id="properties" class="properties-section">
+        <div class="container">
+            <h2 class="section-title">Featured Properties</h2>
+            <div class="properties-grid" id="propertiesGrid">
+                <!-- Properties will be loaded here by JavaScript -->
+            </div>
+            <div style="text-align: center;">
+                <a href="/properties" class="btn btn-primary">
+                    <i class="fas fa-search"></i> View All Properties
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section" style="padding: 4rem 0; background: var(--white);">
+        <div class="container">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <h2 class="section-title">Why Choose Konkan?</h2>
+                <p style="font-size: 1.1rem; color: var(--gray); margin-bottom: 3rem;">
+                    The Konkan Coast offers breathtaking landscapes, rich cultural heritage, and excellent investment opportunities. 
+                    From beachfront villas to agricultural lands, find the perfect property that matches your dreams.
+                </p>
+                <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div class="feature-card" style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-umbrella-beach" style="font-size: 3rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+                        <h3>Great Locations</h3>
+                        <p>Stunning properties with at good locations</p>
+                    </div>
+                    <div class="feature-card" style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h3>Secure Transactions</h3>
+                        <p>Verified properties with legal documentation</p>
+                    </div>
+                    <div class="feature-card" style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-user-tie" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                        <h3>No Middleman/Agent</h3>
+                        <p>Professional guidance throughout the process</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" style="padding: 4rem 0; background: var(--light-gray);">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <p style="font-size: 1.1rem; color: var(--gray); margin-bottom: 2rem;">
+                    Have questions? Get in touch with our team for more information about properties in Konkan.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-phone" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h3>Phone</h3>
+                        <p>+91-9876543210</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-envelope" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h3>Email</h3>
+                        <p>info@konkanproperties.com</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h3>Address</h3>
+                        <p>Ratnagiri, Maharashtra</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- List Property Modal -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>List Your Property</h2>
+                <button class="close-modal" onclick="closeModal('propertyModal')">&times;</button>
+            </div>
+            <form id="propertyForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Property Title *</label>
+                    <input type="text" id="title" name="title" required placeholder="Beautiful Beachfront Villa">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description" rows="4" required placeholder="Describe your property in detail..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (₹) *</label>
+                    <input type="number" id="price" name="price" required placeholder="5000000">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location *</label>
+                    <input type="text" id="location" name="location" required placeholder="Alibaug, Konkan Coast">
+                </div>
+                <div class="form-group">
+                    <label for="area">Area (sq.ft) *</label>
+                    <input type="number" id="area" name="area" required placeholder="1500">
+                </div>
+                <div class="form-group">
+                    <label for="propertyType">Property Type *</label>
+                    <select id="propertyType" name="propertyType" required>
+                        <option value="">Select Type</option>
+                        <option value="house">House</option>
+                        <option value="flat">Flat/Apartment</option>
+                        <option value="land">Land</option>
+                        <option value="shop">Shop</option>
+                        <option value="villa">Villa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bedrooms">Bedrooms *</label>
+                    <input type="number" id="bedrooms" name="bedrooms" required placeholder="3">
+                </div>
+                <div class="form-group">
+                    <label for="bathrooms">Bathrooms *</label>
+                    <input type="number" id="bathrooms" name="bathrooms" required placeholder="2">
+                </div>
+                <div class="form-group">
+                    <label for="amenities">Amenities *</label>
+                    <textarea id="amenities" name="amenities" required placeholder="Swimming Pool, Garden, Parking, etc."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="landmarks">Nearby Landmarks *</label>
+                    <textarea id="landmarks" name="landmarks" required placeholder="Beach, Market, School, Hospital, etc."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="images">Property Images</label>
+                    <input type="file" id="images" name="images" multiple accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Property</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Konkan Coast Properties. All rights reserved.</p>
+            <p>Find your dream home in the beautiful Konkan region</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    <script>
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

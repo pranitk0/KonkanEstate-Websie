@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Details - Konkan Properties</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-home"></i>
+                    Konkan Properties
+                </div>
+                <a href="/" class="btn btn-outline">Back to Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="margin-top: 100px; padding: 2rem;">
+        <div id="propertyDetails">
+            <h1>Property Details</h1>
+            <p>Loading property information...</p>
+        </div>
+    </div>
+<script src="/js/property.js"></script>
+    <!-- <script>
+        
+        // This page will be fully implemented later
+        document.addEventListener('DOMContentLoaded', function() {
+            const property = JSON.parse(sessionStorage.getItem('currentProperty') || 'null');
+            const container = document.getElementById('propertyDetails');
+            
+            if (property) {
+                container.innerHTML = `
+                    <h1>${property.title}</h1>
+                    <div class="property-price" style="font-size: 2rem; color: #2E8B57; margin: 1rem 0;">
+                        ₹${property.price.toLocaleString()}
+                    </div>
+                    <div style="display: flex; gap: 2rem; margin: 2rem 0;">
+                        <div><i class="fas fa-map-marker-alt"></i> ${property.location}</div>
+                        <div><i class="fas fa-expand-arrows-alt"></i> ${property.area} sq.ft</div>
+                    </div>
+                    <p>${property.description}</p>
+                    <button class="btn btn-primary" style="margin-top: 2rem;">
+                        Show Interest
+                    </button>
+                `;
+            } else {
+                container.innerHTML = '<p>Property not found. <a href="/">Go back to home</a></p>';
+            }
+        });
+    </script> -->
+</body>
+</html>

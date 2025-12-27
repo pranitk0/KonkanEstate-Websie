@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Konkan Coast Properties</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo" onclick="window.location.href='/'">
+                    <i class="fas fa-home"></i>
+                    Konkan Properties
+                </div>
+                <a href="/" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="form-container">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <i class="fas fa-user-plus" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h2>Create Your Account</h2>
+            <p style="color: var(--gray);">Join Konkan Properties to find your dream home</p>
+        </div>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="name">
+                    <i class="fas fa-user"></i> Full Name *
+                </label>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> Email Address *
+                </label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email address">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> Password *
+                </label>
+                <input type="password" id="password" name="password" required placeholder="Create a strong password" minlength="6">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">
+                    <i class="fas fa-phone"></i> Phone Number *
+                </label>
+                <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+            </div>
+            
+            <div class="form-group">
+                <label for="address">
+                    <i class="fas fa-map-marker-alt"></i> Address *
+                </label>
+                <textarea id="address" name="address" rows="3" required placeholder="Enter your complete address"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-3d" style="width: 100%; padding: 1rem;">
+                <i class="fas fa-user-plus"></i> Create Account
+            </button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--light-gray);">
+            <p style="color: var(--gray);">
+                Already have an account? 
+                <a href="/login" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                    <i class="fas fa-sign-in-alt"></i> Login here
+                </a>
+            </p>
+        </div>
+        
+        <div style="margin-top: 1.5rem; padding: 1rem; background: #e7f3ff; border-radius: 8px; border-left: 4px solid var(--primary);">
+            <p style="margin: 0; font-size: 0.9rem; color: var(--dark);">
+                <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                <strong>Note:</strong> All users start as regular users. Administrator access is granted separately.
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

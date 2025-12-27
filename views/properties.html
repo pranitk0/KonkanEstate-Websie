@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Properties - Konkan Coast Properties</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-home"></i>
+                    Konkan Properties
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/properties" class="active">Properties</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#contact">Contact</a></li>
+                </ul>
+                <div class="auth-buttons" id="navAuth">
+                    <a href="/login" class="btn btn-outline">Login</a>
+                    <a href="/register" class="btn btn-primary">Register</a>
+                </div>
+                <div class="nav-user" id="navUser" style="display: none;">
+                    <div class="user-info">
+                        <span>Welcome, <strong id="userName"></strong></span>
+                        <span class="user-role" id="userRole"></span>
+                    </div>
+                    <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+                    <button onclick="logout()" class="btn btn-secondary">Logout</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Properties Section -->
+    <section class="properties-section" style="margin-top: 100px;">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>All Properties</h1>
+                <p>Discover your dream property in the beautiful Konkan Coast</p>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div style="background: var(--white); padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); margin-bottom: 2rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div class="form-group">
+                        <label for="search">Search</label>
+                        <input type="text" id="search" placeholder="Search by title or location...">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyType">Property Type</label>
+                        <select id="propertyType">
+                            <option value="">All Types</option>
+                            <option value="house">House</option>
+                            <option value="flat">Flat/Apartment</option>
+                            <option value="land">Land</option>
+                            <option value="shop">Shop</option>
+                            <option value="villa">Villa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="minPrice">Min Price</label>
+                        <input type="number" id="minPrice" placeholder="Min Price">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxPrice">Max Price</label>
+                        <input type="number" id="maxPrice" placeholder="Max Price">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="applyFilters()">
+                    <i class="fas fa-filter"></i> Apply Filters
+                </button>
+                <button class="btn btn-outline" onclick="clearFilters()">
+                    <i class="fas fa-times"></i> Clear
+                </button>
+            </div>
+
+            <!-- Properties Grid -->
+            <div class="properties-grid" id="propertiesGrid">
+                <!-- Properties will be loaded here by JavaScript -->
+            </div>
+
+            <!-- Load More Button -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn btn-primary" onclick="loadProperties()">
+                    <i class="fas fa-sync-alt"></i> Load More Properties
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- List Property Button -->
+    <div style="position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;">
+        <button class="btn btn-primary" onclick="openModal('propertyModal')" style="padding: 1rem; border-radius: 50%; width: 60px; height: 60px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <!-- List Property Modal -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>List Your Property</h2>
+                <button class="close-modal" onclick="closeModal('propertyModal')">&times;</button>
+            </div>
+            <form id="propertyForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Property Title *</label>
+                    <input type="text" id="title" name="title" required placeholder="Beautiful Beachfront Villa">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description" rows="4" required placeholder="Describe your property in detail..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (₹) *</label>
+                    <input type="number" id="price" name="price" required placeholder="5000000">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location *</label>
+                    <input type="text" id="location" name="location" required placeholder="Alibaug, Konkan Coast">
+                </div>
+                <div class="form-group">
+                    <label for="area">Area (sq.ft) *</label>
+                    <input type="number" id="area" name="area" required placeholder="1500">
+                </div>
+                <div class="form-group">
+                    <label for="propertyType">Property Type *</label>
+                    <select id="propertyType" name="propertyType" required>
+                        <option value="">Select Type</option>
+                        <option value="house">House</option>
+                        <option value="flat">Flat/Apartment</option>
+                        <option value="land">Land</option>
+                        <option value="shop">Shop</option>
+                        <option value="villa">Villa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bedrooms">Bedrooms *</label>
+                    <input type="number" id="bedrooms" name="bedrooms" required placeholder="3">
+                </div>
+                <div class="form-group">
+                    <label for="bathrooms">Bathrooms *</label>
+                    <input type="number" id="bathrooms" name="bathrooms" required placeholder="2">
+                </div>
+                <div class="form-group">
+                    <label for="amenities">Amenities *</label>
+                    <textarea id="amenities" name="amenities" required placeholder="Swimming Pool, Garden, Parking, etc."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="landmarks">Nearby Landmarks *</label>
+                    <textarea id="landmarks" name="landmarks" required placeholder="Beach, Market, School, Hospital, etc."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="images">Property Images</label>
+                    <input type="file" id="images" name="images" multiple accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Property</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script>
+        // Filter functions
+        function applyFilters() {
+            // This would be implemented to filter properties
+            showAlert('Filter functionality coming soon!', 'info');
+        }
+
+        function clearFilters() {
+            document.getElementById('search').value = '';
+            document.getElementById('propertyType').value = '';
+            document.getElementById('minPrice').value = '';
+            document.getElementById('maxPrice').value = '';
+            loadProperties();
+        }
+    </script>
+</body>
+</html>

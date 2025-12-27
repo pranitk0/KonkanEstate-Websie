@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Konkan Properties</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo" onclick="window.location.href='/'">
+                    <i class="fas fa-home"></i>
+                    Konkan Properties
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/properties">Properties</a></li>
+                    <li><a href="#my-properties">My Properties</a></li>
+                    <li><a href="#my-interests">My Interests</a></li>
+                </ul>
+                <div class="nav-user" id="navUser">
+                    <div class="user-info">
+                        <span>Welcome, <strong id="userName"></strong></span>
+                        <span class="user-role" id="userRole"></span>
+                    </div>
+                    <button onclick="logout()" class="btn btn-secondary">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Your Dashboard</h1>
+                <p>Manage your properties and track your interests</p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="propertiesCount">0</div>
+                    <div class="stat-label">My Properties</div>
+                    <i class="fas fa-home" style="font-size: 2rem; color: var(--primary); opacity: 0.3; position: absolute; top: 1rem; right: 1rem;"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="interestsCount">0</div>
+                    <div class="stat-label">My Interests</div>
+                    <i class="fas fa-heart" style="font-size: 2rem; color: #ff6b6b; opacity: 0.3; position: absolute; top: 1rem; right: 1rem;"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingCount">0</div>
+                    <div class="stat-label">Pending Approval</div>
+                    <i class="fas fa-clock" style="font-size: 2rem; color: #ffc107; opacity: 0.3; position: absolute; top: 1rem; right: 1rem;"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="approvedCount">0</div>
+                    <div class="stat-label">Approved</div>
+                    <i class="fas fa-check-circle" style="font-size: 2rem; color: #28a745; opacity: 0.3; position: absolute; top: 1rem; right: 1rem;"></i>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div style="text-align: center; margin: 3rem 0;">
+                <button class="btn btn-primary" onclick="openModal('propertyModal')" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                    <i class="fas fa-plus"></i> List New Property
+                </button>
+                <a href="/properties" class="btn btn-outline" style="padding: 1rem 2rem; font-size: 1.1rem; margin-left: 1rem;">
+                    <i class="fas fa-search"></i> Browse Properties
+                </a>
+            </div>
+
+            <!-- My Properties Section -->
+            <section id="my-properties" style="margin: 4rem 0;">
+                <h2 style="color: var(--primary); margin-bottom: 2rem; text-align: center;">
+                    <i class="fas fa-home"></i> My Properties
+                </h2>
+                <div id="userProperties">
+                    <div style="text-align: center; padding: 2rem;">
+                        <div class="loading" style="width: 40px; height: 40px; border: 4px solid #f0f0f0; border-top: 4px solid var(--primary); border-radius: 50%; margin: 0 auto 1rem; animation: spin 1s linear infinite;"></div>
+                        <p>Loading your properties...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Interests Section -->
+            <section id="my-interests" style="margin: 4rem 0;">
+                <h2 style="color: var(--primary); margin-bottom: 2rem; text-align: center;">
+                    <i class="fas fa-heart"></i> My Interests
+                </h2>
+                <div id="userInterests">
+                    <div style="text-align: center; padding: 2rem;">
+                        <div class="loading" style="width: 40px; height: 40px; border: 4px solid #f0f0f0; border-top: 4px solid var(--primary); border-radius: 50%; margin: 0 auto 1rem; animation: spin 1s linear infinite;"></div>
+                        <p>Loading your interests...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- List Property Modal -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: var(--primary);">
+                    <i class="fas fa-plus"></i> List Your Property
+                </h2>
+                <button class="close-modal" onclick="closeModal('propertyModal')">&times;</button>
+            </div>
+            <form id="propertyForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Property Title *</label>
+                    <input type="text" id="title" name="title" required placeholder="Beautiful Beachfront Villa in Konkan">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description" rows="4" required placeholder="Describe your property in detail..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price (₹) *</label>
+                    <input type="number" id="price" name="price" required placeholder="5000000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Location *</label>
+                    <input type="text" id="location" name="location" required placeholder="Alibaug, Konkan Coast">
+                </div>
+                
+                <div class="form-group">
+                    <label for="area">Area (sq.ft) *</label>
+                    <input type="number" id="area" name="area" required placeholder="1500">
+                </div>
+                
+                <div class="form-group">
+                    <label for="propertyType">Property Type *</label>
+                    <select id="propertyType" name="propertyType" required>
+                        <option value="">Select Property Type</option>
+                        <option value="house">House</option>
+                        <option value="flat">Flat/Apartment</option>
+                        <option value="land">Land</option>
+                        <option value="shop">Shop</option>
+                        <option value="villa">Villa</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bedrooms">Bedrooms *</label>
+                    <input type="number" id="bedrooms" name="bedrooms" required placeholder="3" min="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bathrooms">Bathrooms *</label>
+                    <input type="number" id="bathrooms" name="bathrooms" required placeholder="2" min="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="amenities">Amenities *</label>
+                    <textarea id="amenities" name="amenities" required placeholder="Swimming Pool, Garden, Parking, Power Backup, Security, etc."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="landmarks">Nearby Landmarks *</label>
+                    <textarea id="landmarks" name="landmarks" required placeholder="Beach (500m), Market (1km), School (2km), Hospital (3km), etc."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="images">Property Images</label>
+                    <input type="file" id="images" name="images" multiple accept="image/*">
+                    <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                        <i class="fas fa-info-circle"></i> You can upload multiple images. First image will be used as cover.
+                    </small>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+                    <i class="fas fa-paper-plane"></i> Submit Property for Approval
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script>
+        // Enhanced dashboard functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            const authToken = localStorage.getItem('authToken');
+
+            if (!currentUser || !authToken) {
+                window.location.href = '/login';
+                return;
+            }
+
+            // Update user info
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userRole').textContent = currentUser.isVerified ? 'Administrator' : 'User';
+            if (currentUser.isVerified) {
+                document.getElementById('userRole').className = 'user-role admin';
+            }
+
+            loadDashboardData();
+        });
+
+        async function loadDashboardData() {
+            try {
+                const authToken = localStorage.getItem('authToken');
+                if (!authToken) {
+                    throw new Error('No authentication token found');
+                }
+
+                console.log('📊 Loading dashboard data...');
+
+                // Load user's properties
+                const propertiesResponse = await fetch('/api/properties/user/my-properties', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (!propertiesResponse.ok) {
+                    throw new Error(`Failed to fetch properties: ${propertiesResponse.status}`);
+                }
+
+                const properties = await propertiesResponse.json();
+                console.log('✅ Properties loaded:', properties);
+                
+                // Calculate stats
+                const pendingCount = properties.filter(p => p.status === 'pending').length;
+                const approvedCount = properties.filter(p => p.status === 'approved').length;
+                
+                // Update stats
+                document.getElementById('propertiesCount').textContent = properties.length;
+                document.getElementById('pendingCount').textContent = pendingCount;
+                document.getElementById('approvedCount').textContent = approvedCount;
+                
+                // Load interests count
+                const interestsResponse = await fetch('/api/properties/user/my-interests', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (interestsResponse.ok) {
+                    const interests = await interestsResponse.json();
+                    document.getElementById('interestsCount').textContent = interests.length;
+                    displayUserInterests(interests);
+                } else {
+                    console.warn('Failed to load interests');
+                    document.getElementById('interestsCount').textContent = '0';
+                }
+
+                // Display data
+                displayUserProperties(properties);
+
+            } catch (error) {
+                console.error('❌ Error loading dashboard data:', error);
+                showAlert('❌ Failed to load dashboard data: ' + error.message, 'error');
+                
+                // Show error state
+                document.getElementById('userProperties').innerHTML = `
+                    <div style="text-align: center; padding: 2rem; background: white; border-radius: 15px; box-shadow: var(--shadow);">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ff6b6b; margin-bottom: 1rem;"></i>
+                        <h3>Error Loading Properties</h3>
+                        <p>${error.message}</p>
+                        <button class="btn btn-primary" onclick="loadDashboardData()" style="margin-top: 1rem;">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function displayUserProperties(properties) {
+            const container = document.getElementById('userProperties');
+            if (!container) return;
+
+            if (properties.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; background: white; border-radius: 15px; box-shadow: var(--shadow);">
+                        <i class="fas fa-home" style="font-size: 3rem; color: var(--light-gray); margin-bottom: 1rem;"></i>
+                        <h3>No Properties Listed</h3>
+                        <p>You haven't listed any properties yet.</p>
+                        <button class="btn btn-primary" onclick="openModal('propertyModal')" style="margin-top: 1rem;">
+                            <i class="fas fa-plus"></i> List Your First Property
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="properties-grid">
+                    ${properties.map(property => `
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="/images/${property.images && property.images[0] ? property.images[0] : 'property-placeholder.jpg'}" 
+                                     alt="${property.title}"
+                                     onerror="this.src='/images/property-placeholder.jpg'">
+                                <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.7); color: white; padding: 0.5rem; border-radius: 5px; font-size: 0.8rem;">
+                                    ${property.status}
+                                </div>
+                            </div>
+                            <div class="property-info">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                    <div class="property-price">₹${property.price.toLocaleString()}</div>
+                                    <span class="status-badge status-${property.status}">${property.status}</span>
+                                </div>
+                                <h4 class="property-title">${property.title}</h4>
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i> ${property.location}
+                                </div>
+                                <div class="interest-info">
+                                    <span><i class="fas fa-heart" style="color: #ff6b6b;"></i> ${property.interestCount} interests</span>
+                                    <span><i class="fas fa-clock"></i> ${getTimeAgo(property.postedAt)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function displayUserInterests(interests) {
+            const container = document.getElementById('userInterests');
+            if (!container) return;
+
+            if (interests.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; background: white; border-radius: 15px; box-shadow: var(--shadow);">
+                        <i class="fas fa-heart" style="font-size: 3rem; color: var(--light-gray); margin-bottom: 1rem;"></i>
+                        <h3>No Interests Shown</h3>
+                        <p>You haven't shown interest in any properties yet.</p>
+                        <a href="/properties" class="btn btn-primary" style="margin-top: 1rem;">
+                            <i class="fas fa-search"></i> Browse Properties
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="properties-grid">
+                    ${interests.map(interest => `
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="/images/${interest.property.images && interest.property.images[0] ? interest.property.images[0] : 'property-placeholder.jpg'}" 
+                                     alt="${interest.property.title}"
+                                     onerror="this.src='/images/property-placeholder.jpg'">
+                            </div>
+                            <div class="property-info">
+                                <div class="property-price">₹${interest.property.price.toLocaleString()}</div>
+                                <h4 class="property-title">${interest.property.title}</h4>
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i> ${interest.property.location}
+                                </div>
+                                <div class="interest-info">
+                                    <span><i class="fas fa-clock"></i> ${getTimeAgo(interest.createdAt)}</span>
+                                    <span class="status-badge status-${interest.status}">${interest.status}</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewProperty('${interest.property._id}')" style="width: 100%; margin-top: 1rem;">
+                                    <i class="fas fa-eye"></i> View Property
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function getTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} min ago`;
+            if (diffHours < 24) return `${diffHours} hours ago`;
+            if (diffDays < 7) return `${diffDays} days ago`;
+            return date.toLocaleDateString();
+        }
+
+        function viewProperty(propertyId) {
+            sessionStorage.setItem('currentProperty', JSON.stringify({ _id: propertyId }));
+            window.location.href = `/property-details.html?id=${propertyId}`;
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Property form handling
+        document.getElementById('propertyForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            try {
+                const authToken = localStorage.getItem('authToken');
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<div class="loading"></div> Submitting...';
+                submitBtn.disabled = true;
+
+                const response = await fetch('/api/properties', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showAlert('✅ Property submitted successfully! Waiting for admin approval.', 'success');
+                    closeModal('propertyModal');
+                    this.reset();
+                    loadDashboardData(); // Reload dashboard data
+                } else {
+                    showAlert(data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Property submission error:', error);
+                showAlert('❌ Failed to submit property. Please try again.', 'error');
+            } finally {
+                const submitBtn = document.querySelector('#propertyForm button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Property for Approval';
+                    submitBtn.disabled = false;
+                }
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('propertyModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal('propertyModal');
+            }
+        });
+    </script>
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        .user-role {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .user-role.admin {
+            background: #8B4513;
+        }
+    </style>
+</body>
+</html>

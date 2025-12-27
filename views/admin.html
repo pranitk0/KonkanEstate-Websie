@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Konkan Properties</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-home"></i>
+                    Konkan Properties - Admin
+                </div>
+                <div class="nav-user">
+                    <div class="user-info">
+                        <span>Admin Panel</span>
+                        <span class="user-role admin">Administrator</span>
+                    </div>
+                    <a href="/" class="btn btn-outline">Home</a>
+                    <button onclick="logout()" class="btn btn-secondary">Logout</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Admin Dashboard</h1>
+                <p>Manage properties, users, and approvals</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingCount">0</div>
+                    <div class="stat-label">Pending Properties</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalUsers">0</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalProperties">0</div>
+                    <div class="stat-label">Total Properties</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="soldCount">0</div>
+                    <div class="stat-label">Sold Properties</div>
+                </div>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="tabs" style="margin: 2rem 0;">
+                <button class="tab-btn active" onclick="openTab('pending')">Pending Approval</button>
+                <button class="tab-btn" onclick="openTab('users')">Users</button>
+                <button class="tab-btn" onclick="openTab('sold')">Sold Properties</button>
+                <button class="tab-btn" onclick="openTab('interests')">Interests</button>
+            </div>
+
+            <!-- Pending Properties Tab -->
+            <div id="pending" class="tab-content active">
+                <h2>Properties Pending Approval</h2>
+                <div id="pendingProperties" class="properties-grid">
+                    <!-- Pending properties will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Users Tab -->
+            <div id="users" class="tab-content">
+                <h2>All Users</h2>
+                <div id="usersList" style="background: white; border-radius: 10px; padding: 1rem;">
+                    <!-- Users will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Sold Properties Tab -->
+            <div id="sold" class="tab-content">
+                <h2>Sold Properties</h2>
+                <div id="soldProperties" class="properties-grid">
+                    <!-- Sold properties will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Interests Tab -->
+            <div id="interests" class="tab-content">
+                <h2>Property Interests</h2>
+                <div id="interestsList" style="background: white; border-radius: 10px; padding: 1rem;">
+                    <!-- Interests will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script src="/js/admin.js"></script>
+    <style>
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--light-gray);
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .admin-table th {
+            background: var(--light-gray);
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--light-gray);
+        }
+    </style>
+</body>
+</html>
